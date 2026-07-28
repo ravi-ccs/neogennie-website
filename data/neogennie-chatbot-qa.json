@@ -1,0 +1,677 @@
+{
+  "botName": "NeoGennie Assistant",
+  "reviewInstructions": {
+    "qaLocation": "data/neogennie-chatbot-qa.json",
+    "howToEdit": "Edit answer text, keywords, lead-capture questions, and contact.backendEndpoint in this JSON file. Keep answers factual, avoid commitments, and keep legal/compliance/policy questions routed to the NeoGennie team.",
+    "importantGuardrails": [
+      "Do not promise results, timelines, pricing guarantees, compliance status, legal interpretations, refunds, or contractual terms.",
+      "For legal, compliance, contract, privacy, security-policy, regulated-industry, or formal-policy questions, explain that the NeoGennie team should review and respond later. Do not force lead capture for every question.",
+      "Use approved Q&A answers when there is a reasonable match. If no confident match exists, give a helpful fallback and let the visitor choose whether to use Capture my details.",
+      "Lead capture should start only when the visitor clicks Capture my details or explicitly asks to be contacted. Do not append lead capture after every answer.",
+      "Structured chatbot leads use contact.backendEndpoint / contact.optionalBackendEndpoint when configured; otherwise they are saved locally for testing only under contact.leadCaptureStorageKey."
+    ]
+  },
+  "contact": {
+    "email": "info@neogennie.com",
+    "bookingUrl": "contact.html",
+    "leadCaptureMode": "structured_backend_with_local_testing_fallback",
+    "optionalBackendEndpoint": "https://script.google.com/macros/s/AKfycbzE033lAqetDNby9KxCOI2d-GwYqkDQKNmyu9pSYnXNcqryeZZ7tux5l9LiaHBq9VfZ/exec",
+    "backendEndpoint": "https://script.google.com/macros/s/AKfycbzE033lAqetDNby9KxCOI2d-GwYqkDQKNmyu9pSYnXNcqryeZZ7tux5l9LiaHBq9VfZ/exec",
+    "leadCaptureStorageKey": "neogennie_contact_leads",
+    "configLocation": "data/neogennie-chatbot-qa.json contact.backendEndpoint; same destination contract as contact.html / lead-capture.js. Deployed Google Apps Script endpoint writes to NeoGennie Lead Capture sheet.",
+    "fallbackNotice": "Thanks — your chatbot details were saved locally for testing. The backend endpoint is not configured yet, so this request was not sent to the NeoGennie team."
+  },
+  "welcomeMessage": "Hi, I’m the NeoGennie Assistant. I can answer general and product questions or help you choose a starting AI agent. Use “Capture my details” only if you want the NeoGennie team to follow up.",
+  "fallbackAnswer": "I do not have a perfect approved answer for that exact wording yet, but I can help with NeoGennie products, pricing, implementation, integrations, lead generation, customer response, internal knowledge, or custom workflow automation. Try asking in those terms, or click “Capture my details” if you want the team to follow up.",
+  "guardrailAnswer": "That question may involve legal, compliance, contract, privacy, security, pricing, timeline, warranty, refund, SLA, or other binding-service details. I can share general product information, but the NeoGennie team should review and confirm specifics later if you choose to share your details.",
+  "commitmentDisclaimer": "I can answer general NeoGennie product questions, but I cannot make legal, compliance, pricing, timeline, warranty, refund, SLA, or binding service commitments. The team confirms those details in a review, proposal, or statement of work.",
+  "guardrailKeywords": [
+    "legal advice",
+    "legal question",
+    "lawyer",
+    "attorney",
+    "contract terms",
+    "contract review",
+    "terms of service",
+    "privacy policy",
+    "data privacy law",
+    "compliance requirement",
+    "regulatory compliance",
+    "hipaa",
+    "pci",
+    "soc 2",
+    "soc2",
+    "gdpr",
+    "ccpa",
+    "insurance compliance",
+    "regulated industry",
+    "audit requirement",
+    "security policy",
+    "data processing agreement",
+    "dpa",
+    "liability",
+    "indemnity",
+    "refund policy",
+    "guarantee",
+    "guaranteed",
+    "sla",
+    "service level agreement",
+    "warranty",
+    "binding commitment",
+    "legal",
+    "compliance",
+    "compliant"
+  ],
+  "quickReplies": [
+    {
+      "label": "What is NeoGennie?",
+      "query": "what is neogennie"
+    },
+    {
+      "label": "Help me choose",
+      "query": "which product should I choose"
+    },
+    {
+      "label": "Product pricing",
+      "query": "pricing"
+    },
+    {
+      "label": "Capture my details",
+      "action": "lead"
+    }
+  ],
+  "leadQuestions": [
+    {
+      "field": "name",
+      "label": "What is your name?",
+      "required": true
+    },
+    {
+      "field": "email",
+      "label": "What is your work email address?",
+      "required": true
+    },
+    {
+      "field": "phone",
+      "label": "Phone number? Optional — type skip if you prefer.",
+      "required": false
+    },
+    {
+      "field": "interest",
+      "label": "Which NeoGennie product or business need are you interested in?",
+      "required": true
+    },
+    {
+      "field": "message",
+      "label": "Briefly describe your message or workflow challenge.",
+      "required": true
+    },
+    {
+      "field": "consent",
+      "label": "Please type “I agree” to acknowledge the Privacy Policy and Terms and allow the NeoGennie team to contact you about this inquiry.",
+      "required": true,
+      "type": "consent"
+    }
+  ],
+  "answers": [
+    {
+      "id": "what-is-neogennie",
+      "category": "General",
+      "question": "What is NeoGennie?",
+      "keywords": [
+        "what is neogennie",
+        "about neogennie",
+        "ai workforce os",
+        "agentic ai partner"
+      ],
+      "answer": "NeoGennie is an AI Workforce OS for small business owners. It packages practical AI agents for digital presence, lead generation, customer response, internal knowledge, and custom workflow automation."
+    },
+    {
+      "id": "who-for",
+      "category": "General",
+      "question": "Who is NeoGennie designed for?",
+      "keywords": [
+        "who is it for",
+        "small business",
+        "smb",
+        "business owner",
+        "lean team",
+        "what businesses",
+        "service business"
+      ],
+      "answer": "NeoGennie is designed for small business owners and lean teams that need more growth and operating capacity without immediately adding a large marketing, sales, customer service, or operations team."
+    },
+    {
+      "id": "technical-skill",
+      "category": "General",
+      "question": "Do I need technical knowledge?",
+      "keywords": [
+        "technical",
+        "non technical",
+        "coding",
+        "do i need tech",
+        "technology skills"
+      ],
+      "answer": "No. NeoGennie is intended for business owners, not technical teams. The implementation translates your business need into a practical AI workflow your team can use."
+    },
+    {
+      "id": "choose-product",
+      "category": "Buying guidance",
+      "question": "Which NeoGennie product should I choose first?",
+      "keywords": [
+        "choose",
+        "which product",
+        "best product",
+        "where to start",
+        "help me choose",
+        "recommend",
+        "help picking",
+        "difference between products",
+        "compare products",
+        "best fit",
+        "recommend package",
+        "what package",
+        "product path",
+        "picking products",
+        "pick between products",
+        "select product",
+        "which package"
+      ],
+      "answer": "Start with the pain you feel most. Need credibility and lead capture: NeoGennie Brand Booster. Need more sales conversations: NeoGennie Lead Generation Rocket. Missing inquiries: NeoGennie Front Office Orbiter. Scattered internal knowledge: NeoGennie Back Office Mission Control. Business-specific process optimization or custom workflows: NeoGennie Starship."
+    },
+    {
+      "id": "implementation-timeline",
+      "category": "Implementation",
+      "question": "How quickly can we get started?",
+      "keywords": [
+        "timeline",
+        "how long",
+        "how quickly",
+        "start",
+        "implementation time",
+        "launch",
+        "launch time",
+        "go live"
+      ],
+      "answer": "A focused first AI agent can usually begin with discovery, content and data collection, workflow design, setup, review, and launch. Exact timing depends on scope, integrations, decision speed, and whether the needed business information is ready. The NeoGennie team can confirm timing after a review."
+    },
+    {
+      "id": "data-needed",
+      "category": "Implementation",
+      "question": "What information do you need from my business?",
+      "keywords": [
+        "what information",
+        "what do you need",
+        "documents",
+        "data",
+        "inputs",
+        "knowledge base",
+        "prepare",
+        "before starting",
+        "what do i need",
+        "information needed",
+        "documents needed",
+        "data needed",
+        "materials"
+      ],
+      "answer": "Useful inputs include your services, target customers, frequently asked questions, sales process, appointment rules, website or brand assets, policies, SOPs, and examples of repeatable tasks you want to improve."
+    },
+    {
+      "id": "tools-integration",
+      "category": "Implementation",
+      "question": "Can NeoGennie work with my current tools?",
+      "keywords": [
+        "crm",
+        "calendar",
+        "website",
+        "integration",
+        "connect",
+        "tools",
+        "systems",
+        "integrate",
+        "email",
+        "website tool",
+        "current tools",
+        "software"
+      ],
+      "answer": "Often, yes. Some products can start with a website, chatbot, forms, email, and calendar flow. More advanced business-specific process optimization, custom workflows, data handoffs, or specialized automation are usually handled through NeoGennie Starship and need a feasibility review."
+    },
+    {
+      "id": "employees",
+      "category": "General",
+      "question": "Will AI replace my employees?",
+      "keywords": [
+        "replace employees",
+        "replace staff",
+        "job loss",
+        "headcount",
+        "employee",
+        "ai replace",
+        "staff"
+      ],
+      "answer": "NeoGennie is positioned as added workforce capacity, not a blanket employee replacement. The goal is to automate repetitive work, reduce administrative drag, and help people spend more time on high-value customer and business activities."
+    },
+    {
+      "id": "brand-booster",
+      "category": "Product",
+      "question": "What is NeoGennie Brand Booster?",
+      "keywords": [
+        "brand booster",
+        "branding",
+        "landing page",
+        "brand presence",
+        "digital presence",
+        "brand",
+        "website",
+        "web page",
+        "content",
+        "online presence",
+        "credibility",
+        "logo",
+        "messaging",
+        "faq knowledge base",
+        "lead capture form",
+        "brand messaging",
+        "professional landing page",
+        "lead capture forms",
+        "appointment booking",
+        "ai content generation",
+        "digital foundation"
+      ],
+      "answer": "NeoGennie Brand Booster helps a small business establish a professional digital presence. It can include brand messaging, a professional landing page, lead capture forms, appointment booking, FAQ knowledge base, and AI content generation."
+    },
+    {
+      "id": "lead-generation-rocket",
+      "category": "Product",
+      "question": "What is NeoGennie Lead Generation Rocket?",
+      "keywords": [
+        "lead generation rocket",
+        "lead generation",
+        "sales pipeline",
+        "prospecting",
+        "outreach",
+        "follow up",
+        "qualified leads",
+        "lead",
+        "leads",
+        "prospect",
+        "pipeline",
+        "sales",
+        "follow-up",
+        "customers",
+        "new customers",
+        "qualified opportunities",
+        "appointments with prospects",
+        "revenue growth",
+        "growth engine"
+      ],
+      "answer": "NeoGennie Lead Generation Rocket helps create pipeline motion with ideal-customer discovery, lead sourcing, AI-assisted outreach, automated follow-ups, appointment booking, and sales opportunity pipeline organization."
+    },
+    {
+      "id": "front-office-orbiter",
+      "category": "Product",
+      "question": "What is NeoGennie Front Office Orbiter?",
+      "keywords": [
+        "front office orbiter",
+        "front office",
+        "customer inquiry",
+        "customer service",
+        "appointment booking",
+        "web desk",
+        "chatbot",
+        "customer inquiries",
+        "answer questions",
+        "answer calls",
+        "phone calls",
+        "web chat",
+        "website visitors",
+        "visitor questions",
+        "book appointments",
+        "schedule appointments",
+        "customer response",
+        "24/7",
+        "missed calls",
+        "missed messages",
+        "reduce admin work",
+        "admin work",
+        "administrative work",
+        "lower admin load",
+        "save admin time"
+      ],
+      "answer": "NeoGennie Front Office Orbiter is a 24/7 AI-supported web desk that captures inquiries, answers approved common questions, books appointments, and routes next steps when the owner or staff are busy."
+    },
+    {
+      "id": "back-office-mission-control",
+      "category": "Product",
+      "question": "What is NeoGennie Back Office Mission Control?",
+      "keywords": [
+        "back office mission control",
+        "back office",
+        "internal knowledge",
+        "sop",
+        "policies",
+        "training",
+        "onboarding",
+        "knowledge search",
+        "knowledge base",
+        "documents",
+        "sops",
+        "standard operating procedures",
+        "procedures",
+        "employee training",
+        "staff training",
+        "policies and procedures",
+        "manuals",
+        "scattered knowledge",
+        "company knowledge"
+      ],
+      "answer": "NeoGennie Back Office Mission Control turns company knowledge into an internal AI assistant for FAQs, product and service details, policies, procedures, SOPs, training resources, onboarding material, and reusable operational answers."
+    },
+    {
+      "id": "starship",
+      "category": "Product",
+      "question": "What is NeoGennie Starship?",
+      "keywords": [
+        "starship",
+        "custom solution",
+        "custom workflow",
+        "process automation",
+        "business transformation",
+        "custom ai agents",
+        "custom",
+        "workflow automation",
+        "automate workflow",
+        "business process",
+        "system integration",
+        "connect systems",
+        "data handoff",
+        "custom ai agent",
+        "business-specific process optimization",
+        "custom workflows",
+        "custom workflow design",
+        "process handoff",
+        "workflow design"
+      ],
+      "answer": "NeoGennie Starship is the custom implementation path for businesses ready for business-specific process optimization, custom workflows, specialized AI agents, and practical automation around how the business actually operates."
+    },
+    {
+      "id": "pricing",
+      "category": "Pricing",
+      "question": "How is NeoGennie priced?",
+      "keywords": [
+        "price",
+        "pricing",
+        "cost",
+        "monthly",
+        "setup fee",
+        "how much",
+        "monthly fee",
+        "subscription",
+        "package cost",
+        "payment"
+      ],
+      "answer": "NeoGennie pricing is based on product scope and ongoing support. The Pricing page shows current starting points. Final scope depends on integrations, data readiness, workflow complexity, and usage, so the team should confirm exact pricing after a fit review."
+    },
+    {
+      "id": "guarantees",
+      "category": "Guardrail",
+      "question": "Do you guarantee specific results?",
+      "keywords": [
+        "guarantee results",
+        "guaranteed leads",
+        "guarantee savings",
+        "promise leads",
+        "specific number of leads"
+      ],
+      "answer": "NeoGennie can support the systems that create leads, faster responses, efficiency, and consistency, but the chatbot cannot guarantee specific lead volume, savings, timelines, or business outcomes. The NeoGennie team can discuss realistic expectations during a review."
+    },
+    {
+      "id": "mistakes",
+      "category": "Guardrail",
+      "question": "Can the AI make mistakes?",
+      "keywords": [
+        "mistakes",
+        "wrong answer",
+        "hallucinate",
+        "accuracy",
+        "reliable"
+      ],
+      "answer": "AI systems can make mistakes. NeoGennie should be configured with approved knowledge, clear boundaries, escalation paths, and human review for sensitive or high-impact decisions."
+    },
+    {
+      "id": "legal-compliance",
+      "category": "Guardrail",
+      "question": "Can you answer legal, compliance, contract, or policy questions?",
+      "keywords": [
+        "legal",
+        "compliance",
+        "contract",
+        "policy",
+        "privacy",
+        "security",
+        "terms",
+        "regulated",
+        "hipaa",
+        "gdpr"
+      ],
+      "answer": "Questions involving legal, compliance, contract, privacy, security, or formal policy details should be reviewed by the NeoGennie team. The chatbot can provide general product information only and should not make commitments or interpretations."
+    },
+    {
+      "id": "get-started",
+      "category": "Lead capture",
+      "question": "How do I get started?",
+      "keywords": [
+        "get started",
+        "contact",
+        "talk to someone",
+        "book",
+        "consultation",
+        "demo",
+        "call me",
+        "speak to someone",
+        "contact sales",
+        "book consultation",
+        "email me"
+      ],
+      "answer": "The best next step is to share your contact details and the business outcome you want to improve. The NeoGennie team can review your needs and recommend the best first AI agent path."
+    },
+    {
+      "id": "chatbot-limits",
+      "category": "General",
+      "question": "What can the NeoGennie Assistant chatbot answer?",
+      "keywords": [
+        "chatbot",
+        "assistant",
+        "neogennie assistant",
+        "what can chatbot answer",
+        "chatbot limits",
+        "binding commitments",
+        "legal compliance pricing timeline warranty refund sla"
+      ],
+      "answer": "The NeoGennie Assistant can answer general product questions and help visitors choose a starting AI agent. It cannot make legal, compliance, pricing, timeline, warranty, refund, SLA, or binding service commitments. The NeoGennie team confirms those details through a review, proposal, or statement of work."
+    }
+  ],
+  "intentRouting": {
+    "brand-booster": [
+      "brand",
+      "branding",
+      "website",
+      "landing page",
+      "web page",
+      "content",
+      "online presence",
+      "digital presence",
+      "credibility",
+      "logo",
+      "messaging",
+      "faq knowledge base",
+      "lead capture form",
+      "brand messaging",
+      "professional landing page",
+      "lead capture forms",
+      "appointment booking",
+      "ai content generation",
+      "digital foundation"
+    ],
+    "lead-generation-rocket": [
+      "lead",
+      "leads",
+      "prospect",
+      "prospecting",
+      "pipeline",
+      "sales",
+      "outreach",
+      "follow up",
+      "follow-up",
+      "customers",
+      "new customers",
+      "qualified opportunities",
+      "appointments with prospects",
+      "revenue growth",
+      "growth engine"
+    ],
+    "front-office-orbiter": [
+      "front office",
+      "customer inquiry",
+      "customer inquiries",
+      "customer service",
+      "answer questions",
+      "answer calls",
+      "phone calls",
+      "chatbot",
+      "web chat",
+      "website visitors",
+      "visitor questions",
+      "book appointments",
+      "appointment booking",
+      "schedule appointments",
+      "customer response",
+      "24/7",
+      "missed calls",
+      "missed messages",
+      "reduce admin work",
+      "admin work",
+      "administrative work",
+      "lower admin load",
+      "save admin time"
+    ],
+    "back-office-mission-control": [
+      "back office",
+      "internal knowledge",
+      "knowledge base",
+      "knowledge search",
+      "documents",
+      "sops",
+      "standard operating procedures",
+      "procedures",
+      "training",
+      "onboarding",
+      "employee training",
+      "staff training",
+      "policies and procedures",
+      "manuals",
+      "scattered knowledge",
+      "company knowledge"
+    ],
+    "starship": [
+      "custom",
+      "custom workflow",
+      "workflow automation",
+      "automate workflow",
+      "process automation",
+      "business process",
+      "crm workflow",
+      "crm integration",
+      "system integration",
+      "connect systems",
+      "data handoff",
+      "business transformation",
+      "custom ai agent"
+    ],
+    "pricing": [
+      "price",
+      "pricing",
+      "cost",
+      "monthly fee",
+      "setup fee",
+      "subscription",
+      "how much",
+      "package cost",
+      "payment"
+    ],
+    "tools-integration": [
+      "integrate",
+      "integration",
+      "connect",
+      "crm",
+      "calendar",
+      "email",
+      "website tool",
+      "current tools",
+      "systems",
+      "software"
+    ],
+    "data-needed": [
+      "prepare",
+      "before starting",
+      "what do i need",
+      "information needed",
+      "documents needed",
+      "data needed",
+      "what information",
+      "inputs",
+      "materials"
+    ],
+    "choose-product": [
+      "which product",
+      "choose",
+      "help picking",
+      "help me choose",
+      "difference between products",
+      "compare products",
+      "best fit",
+      "where to start",
+      "recommend package",
+      "what package",
+      "product path",
+      "picking products",
+      "pick between products",
+      "select product",
+      "which package"
+    ],
+    "employees": [
+      "replace employees",
+      "replace staff",
+      "ai replace",
+      "job loss",
+      "headcount",
+      "staff"
+    ],
+    "who-for": [
+      "small business",
+      "smb",
+      "business owner",
+      "who is it for",
+      "what businesses",
+      "service business"
+    ],
+    "implementation-timeline": [
+      "timeline",
+      "how long",
+      "how quickly",
+      "implementation time",
+      "launch time",
+      "go live"
+    ],
+    "get-started": [
+      "get started",
+      "talk to someone",
+      "speak to someone",
+      "contact sales",
+      "book consultation",
+      "demo",
+      "call me",
+      "email me"
+    ]
+  }
+}

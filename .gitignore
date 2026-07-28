@@ -1,0 +1,13 @@
+# Local backups and internal working reports
+_backup*/
+reports/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local server / generated caches
+__pycache__/
+*.pyc
