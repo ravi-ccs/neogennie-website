@@ -38,6 +38,21 @@
     }
   }
 
+  function revealGetStartedSuccessResource(form){
+    const panel = form.querySelector('[data-get-started-success-resource]');
+    if(panel){
+      panel.hidden = false;
+    }
+  }
+
+  function revealDiscoveryCallConfirmation(form){
+    const panel = form.querySelector('[data-discovery-call-confirmation]');
+    if(panel){
+      panel.hidden = false;
+      panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+  }
+
   function hideElement(node){
     if(!node) return;
     node.hidden = true;
@@ -52,6 +67,7 @@
     hideElement(fields);
     hideElement(note);
     hideElement(button);
+    revealGetStartedSuccessResource(form);
     revealDiscoveryCall(form);
   }
 
@@ -148,6 +164,13 @@
   }
 
   function attach(form){
+    const discoveryLink = form.querySelector('[data-discovery-call-link]');
+    if(discoveryLink){
+      discoveryLink.addEventListener('click', function(){
+        window.setTimeout(function(){ revealDiscoveryCallConfirmation(form); }, 300);
+      });
+    }
+
     form.addEventListener('submit', async function(event){
       event.preventDefault();
       if(!form.checkValidity()){
