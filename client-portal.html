@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeoGennie Client Workspace | AI Workforce Interface</title>
+  <meta name="description" content="NeoGennie client workspace prototype for AI Personal Assistant, Branding Assistant, Digital Marketing Assistant, and Sales Appointment Booking Agent." />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="client-portal.css?v=sitewide-latest-20260810-1559-final-local" />
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="left-pane" aria-label="NeoGennie navigation">
+      <div class="brand-block">
+        <img src="assets/neogennie-header-logo-20260810.png?v=logo-pack-source-20260810-201640-local" alt="NeoGennie logo" />
+        <div>
+          <strong>NeoGennie</strong>
+          <span>By Champlain Consulting Services</span>
+        </div>
+      </div>
+      <div class="workspace-label">Client AI Workspace</div>
+
+      <nav class="accordion-nav" id="accordionNav">
+        <section class="nav-group open" data-group="personal">
+          <button class="group-toggle" type="button"><span class="material-symbols-outlined">person</span><span>AI Personal Assistant</span><span class="material-symbols-outlined chevron">expand_less</span></button>
+          <div class="sub-options">
+            <button class="nav-item active" type="button" data-view="todo"><span class="material-symbols-outlined">checklist</span>To-Do</button>
+            <button class="nav-item" type="button" data-view="email"><span class="material-symbols-outlined">mail</span>Email</button>
+          </div>
+        </section>
+        <section class="nav-group" data-group="branding">
+          <button class="group-toggle" type="button"><span class="material-symbols-outlined">campaign</span><span>AI Branding Assistant</span><span class="material-symbols-outlined chevron">expand_more</span></button>
+          <div class="sub-options">
+            <button class="nav-item" type="button" data-view="linkedin"><span class="material-symbols-outlined">article</span>Post on LinkedIn</button>
+            <button class="nav-item" type="button" data-view="instagram"><span class="material-symbols-outlined">photo_camera</span>Post on Instagram</button>
+          </div>
+        </section>
+        <section class="nav-group" data-group="marketing">
+          <button class="group-toggle" type="button"><span class="material-symbols-outlined">monitoring</span><span>AI Digital Marketing Assistant</span><span class="material-symbols-outlined chevron">expand_more</span></button>
+          <div class="sub-options">
+            <button class="nav-item" type="button" data-view="leads"><span class="material-symbols-outlined">table_chart</span>Prospect / Lead List</button>
+          </div>
+        </section>
+        <section class="nav-group" data-group="booking">
+          <button class="group-toggle" type="button"><span class="material-symbols-outlined">event_available</span><span>AI Sales Appointment Booking Agent</span><span class="material-symbols-outlined chevron">expand_more</span></button>
+          <div class="sub-options">
+            <button class="nav-item" type="button" data-view="calendar"><span class="material-symbols-outlined">calendar_month</span>Sales Appointments Calendar</button>
+          </div>
+        </section>
+      </nav>
+
+      <div class="left-panel-card" id="leftContextPanel">
+        <h3>To-Do from email</h3>
+        <div id="leftContextContent"></div>
+      </div>
+    </aside>
+
+    <main class="right-pane">
+      <header class="top-bar">
+        <div>
+          <p class="eyebrow">NeoGennie AI Workforce OS</p>
+          <h1 id="viewTitle">AI Personal Assistant · To-Do</h1>
+        </div>
+        <a class="back-link" href="index.html"><span class="material-symbols-outlined">arrow_back</span> Website</a>
+      </header>
+
+      <section class="instruction-panel" aria-label="Instruction input">
+        <label for="instructionInput">Tell NeoGennie what to do</label>
+        <div class="instruction-row">
+          <textarea id="instructionInput" rows="2" placeholder="Example: Summarize urgent tasks from email, draft a reply, create a LinkedIn post, update a lead, or reschedule an appointment."></textarea>
+          <button id="runInstruction" type="button"><span class="material-symbols-outlined">send</span> Run</button>
+        </div>
+        <div class="quick-actions" id="quickActions"></div>
+      </section>
+
+      <section class="output-grid">
+        <article class="work-area" id="workArea"></article>
+        <aside class="ai-output">
+          <div class="output-header"><span class="material-symbols-outlined">auto_awesome</span><strong>AI Output</strong></div>
+          <div id="aiOutput" class="output-box">Select a section or enter an instruction. This prototype stores local changes in your browser and is ready to connect to Hermes, Gmail, Google Sheets, Calendar, Calendly, LinkedIn, and Instagram APIs.</div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <template id="todoTemplate">
+    <div class="section-heading"><div><p class="eyebrow">Personal Assistant</p><h2>To-Do items from email, reminders, and deadlines</h2></div><button class="primary" id="addTodo"><span class="material-symbols-outlined">add</span>Add To-Do</button></div>
+    <div class="todo-list" id="todoList"></div>
+  </template>
+
+  <template id="emailTemplate">
+    <div class="section-heading"><div><p class="eyebrow">Personal Assistant</p><h2>First 50 emails</h2></div><button class="secondary" id="refreshEmail"><span class="material-symbols-outlined">sync</span>Refresh</button></div>
+    <div class="email-layout"><div class="email-list" id="emailList"></div><div class="email-detail" id="emailDetail"><h3>Select an email</h3><p>Choose an email from the list, then use the instruction box above to draft a reply or send an email.</p></div></div>
+  </template>
+
+  <template id="contentTemplate">
+    <div class="section-heading"><div><p class="eyebrow" id="contentEyebrow">Branding Assistant</p><h2 id="contentTitle">Create a social post</h2></div><button class="primary" id="generatePost"><span class="material-symbols-outlined">edit_square</span>Generate Draft</button></div>
+    <div class="compose-card"><label>Topic / idea / source notes</label><textarea id="postIdea" rows="6" placeholder="Paste your topic, notes, offer details, target audience, or rough idea..."></textarea><label>Tone</label><select id="postTone"><option>Practical and authoritative</option><option>Friendly and educational</option><option>Bold and provocative</option><option>Executive and concise</option></select></div>
+  </template>
+
+  <template id="leadsTemplate">
+    <div class="section-heading"><div><p class="eyebrow">Digital Marketing Assistant</p><h2>Prospect / Lead List</h2></div><div class="button-row"><label class="secondary file-label"><span class="material-symbols-outlined">upload_file</span>Upload CSV<input type="file" id="leadUpload" accept=".csv" /></label><button class="primary" id="addLead"><span class="material-symbols-outlined">person_add</span>Add Lead</button></div></div>
+    <div class="table-wrap"><table id="leadTable"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Source</th><th>Interest</th><th>Status</th><th>Next Step</th><th></th></tr></thead><tbody></tbody></table></div>
+  </template>
+
+  <template id="calendarTemplate">
+    <div class="section-heading"><div><p class="eyebrow">Sales Appointment Booking Agent</p><h2>Sales Appointments Calendar</h2></div><button class="primary" id="addEvent"><span class="material-symbols-outlined">event</span>Add Event</button></div>
+    <div class="calendar-summary"><div><strong>Google Calendar / Calendly view</strong><span>Scheduled events, attendees, email, phone, and meeting links.</span></div><button class="secondary" id="notifyAttendees"><span class="material-symbols-outlined">notifications_active</span>Notify Attendees</button></div>
+    <div class="table-wrap"><table id="calendarTable"><thead><tr><th>Date / Time</th><th>Event</th><th>Attendee</th><th>Email</th><th>Phone</th><th>Meet Link</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+  </template>
+
+  <script src="client-portal.js"></script>
+</body>
+</html>
