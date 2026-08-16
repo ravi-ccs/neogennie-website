@@ -5,4 +5,4 @@ Disallow: /logo-concepts/
 Disallow: /reports/
 Disallow: /_backup*/
 
-Sitemap: https://www.neogennie.com/sitemap.xml
+Sitemap: https://neogennie.com/sitemap.xml
