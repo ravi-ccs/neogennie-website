@@ -5113,3 +5113,22 @@ body.home-page footer .grid > div > span,
 body footer .grid > div > span.text-primary{
   color:#38bdf8!important;
 }
+
+/* Sprint 6 landing page bottom CTA readability — sprint6-cta-text-color-20260816-1239 */
+.sprint6-landing-page .product-detail-bottom-cta,
+.sprint6-landing-page .product-detail-bottom-cta .package-eyebrow,
+.sprint6-landing-page .product-detail-bottom-cta h2,
+.sprint6-landing-page .product-detail-bottom-cta p:not(.package-eyebrow){
+  color:#ffffff!important;
+}
+.sprint6-landing-page .product-detail-bottom-cta .package-eyebrow{
+  color:#b9f0ff!important;
+  text-shadow:0 1px 10px rgba(0,30,44,.36);
+}
+.sprint6-landing-page .product-detail-bottom-cta h2{
+  color:#ffffff!important;
+  text-shadow:0 2px 18px rgba(0,30,44,.38);
+}
+.sprint6-landing-page .product-detail-bottom-cta p:not(.package-eyebrow){
+  color:rgba(255,255,255,.92)!important;
+}
