@@ -5153,3 +5153,32 @@ body footer .grid > div > span.text-primary{
   .home-page #solution-landing-pages{width:calc(100% - 2rem);margin:1.5rem auto 2rem;padding:1rem;border-radius:24px;}
   .home-page #solution-landing-pages .product-related-grid{grid-template-columns:1fr;}
 }
+
+
+/* Solution Pages section exact buyer-journey width — 2026-08-26 */
+.home-page .solution-pages-section-wrap{
+  width:min(100%, 1180px)!important;
+  max-width:1180px!important;
+  margin:2rem auto 2.75rem!important;
+  padding:0 1.25rem!important;
+  box-sizing:border-box!important;
+}
+.home-page .solution-pages-section-wrap #solution-landing-pages{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:1.55rem 1.65rem 1.45rem!important;
+  box-sizing:border-box!important;
+}
+.home-page .solution-pages-section-wrap .product-related-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:.8rem!important;
+}
+@media(max-width:900px){
+  .home-page .solution-pages-section-wrap .product-related-grid{grid-template-columns:1fr!important;}
+}
+@media(max-width:640px){
+  .home-page .solution-pages-section-wrap{padding:0 1rem!important;margin:1.5rem auto 2rem!important;}
+  .home-page .solution-pages-section-wrap #solution-landing-pages{padding:1.25rem!important;border-radius:24px!important;}
+}
